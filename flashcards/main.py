@@ -41,7 +41,8 @@ class Deck(QtWidgets.QWidget):
         rand_str = lambda n: ''.join([random.choice(string.ascii_lowercase) for i in range(n)])
         self.cards.append(flashcard.Flashcard(os.path.join(self.save_dir,
                                                            rand_str(64))))
-        self.text.setText("Created new flashcard!")
+        self.cards[-1].resize(600, 400)
+        self.cards[-1].show()
 
     def delete_cards(self):
         """Delete all flashcards in `save_dir`."""
@@ -56,7 +57,8 @@ class Deck(QtWidgets.QWidget):
         -------
         list of Flashcards
         """
-        for card in [f for f in os.listdir(self.save_dir) if os.path.isfile(os.path.join(self.save_dir, f))]:
+        for card in [f for f in os.listdir(self.save_dir) if 
+                     os.path.isfile(os.path.join(self.save_dir, f))]:
             self.cards.append(flashcard.Flashcard(os.path.join(self.save_dir, card)))
 
 if __name__ == "__main__":
