@@ -45,11 +45,9 @@ class Flashcard(QtWidgets.QWidget):
             self.created_date = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
         else:
             self.read_card_data()
-
-        display_date = QtWidgets.QLabel(self.created_date, alignment=QtCore.Qt.AlignLeft)
-
+        
+        self.setWindowTitle(f"Created: {self.created_date}")
         self.layout = QtWidgets.QVBoxLayout(self)
-        self.layout.addWidget(display_date)
         self.layout.addWidget(self.front)
         self.layout.addWidget(self.back)
 
