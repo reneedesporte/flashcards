@@ -8,6 +8,7 @@ The structure of this project generally follows the recommendations from [python
 ## Dependencies
 This shouldn't apply to anyone downloading the packaged app, but for the record:
  - Python 3.12 (downloaded from [here](https://www.python.org/downloads/))
- - PyQt ([pip-installed](https://doc.qt.io/qtforpython-6/quickstart.html#quick-start)) 
+ - PyQt 6.7.0 ([pip-installed](https://doc.qt.io/qtforpython-6/quickstart.html#quick-start))
+ - [pytest](https://pypi.org/project/pytest/) 24.0
 ## Resources
  - [Qt for Python Quick Start Guide](https://doc.qt.io/qtforpython-6/quickstart.html#quick-start)
