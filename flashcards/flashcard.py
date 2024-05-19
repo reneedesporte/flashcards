@@ -38,14 +38,15 @@ class Flashcard(QtWidgets.QWidget):
         self.back.setFont(font)
 
         self.labels = [""]
+        self.created_date = ""
 
         self.card_id = card_id
-        if not os.path.exists(self.card_id):
-            self.create_card()
-            self.created_date = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
-        else:
+        self.create_card()
+        try:
             self.read_card_data()
-
+        except AssertionError:
+            print(f"{self.card_id} isn't formatted correctly. Consider deleting this card.")
+    
         self.setWindowTitle(f"Created: {self.created_date}")
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.front)
@@ -88,7 +89,7 @@ class Flashcard(QtWidgets.QWidget):
             f.write(f"{self.created_date}\n")
             f.write(f"{front}\n")
             f.write(f"{back}\n")
-            f.write(f"{labels}")
+            f.write(f"{labels}\n")
 
         self.read_card_data()
 
@@ -98,8 +99,13 @@ class Flashcard(QtWidgets.QWidget):
 
     def create_card(self):
         """Create an empty flashcard."""
+        if os.path.exists(self.card_id):
+            print(f"Card already exists at {self.card_id}!")
+            return
         with open(self.card_id, "w", encoding="utf-8") as f:
             f.write("")
+        self.created_date = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+        self.write_card_data("", "", "")
 
     def closeEvent(self, event):
         """Overwritten function to define custom action on window close.
@@ -108,7 +114,7 @@ class Flashcard(QtWidgets.QWidget):
         ----------
         event : QtGui.QCloseEvent
         """
-        self.write_card_data(self.front.text(), self.back.text(), self.labels)
+        self.write_card_data(self.front.text().split("\n")[0], self.back.text().split("\n")[0], self.labels)
 
     # def keyPressEvent(self, event):
     #     if event.key() != QtCore.Qt.Key_Enter:
