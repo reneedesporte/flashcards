@@ -94,16 +94,16 @@ class Flashcard(QtWidgets.QWidget):
         self.read_card_data()
 
     def delete_card(self):
-        """Delete the flashcard file."""
+        """Delete the flashcard file, if in existance."""
         if os.path.exists(self.card_id):
             os.remove(self.card_id)
         else:
             print(f"Can't delete card: No card file exists at {self.card_id}.")
 
     def create_card(self):
-        """Create an empty flashcard."""
+        """Create an empty flashcard, if not in existance already."""
         if os.path.exists(self.card_id):
-            print(f"Card already exists at {self.card_id}.")
+            # print(f"Card already exists at {self.card_id}.")
             return
         with open(self.card_id, "w", encoding="utf-8") as f:
             f.write("")
@@ -117,13 +117,17 @@ class Flashcard(QtWidgets.QWidget):
         ----------
         event : QtGui.QCloseEvent
         """
-        self.write_card_data(self.front.text().split("\n")[0].split("\n")[0],
-                             self.back.text().split("\n")[0].split("\n")[0],
+        self.write_card_data(self.front.text().split("\n\n")[0],
+                             self.back.text().split("\n\n"),
                              self.labels)
 
-    # def keyPressEvent(self, event):
-    #     if event.key() != QtCore.Qt.Key_Enter:
-    #         return
-    #     if self.back == "" or self.front == "":
-    #         empty_input = QtWidgets.QDialogButtonBox("Empty input box!")
-    #         empty_input.show()
+    def keyPressEvent(self, event):
+        """When Enter / Return key is pressed, close the Widget.
+        
+        Parameters
+        ----------
+        QtGui.QCloseEvent
+        """
+        # TODO : when enter key is pressed, switch to "back" input, if empty.
+        if event.key() == QtCore.Qt.Key_Return:
+            self.close()
