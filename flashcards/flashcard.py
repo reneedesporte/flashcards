@@ -68,10 +68,10 @@ class Flashcard(QtWidgets.QWidget):
             card_data = f.readlines()
         assert len(card_data) == 4, "Flashcard file should contain exactly 4 lines."
 
-        self.created_date = card_data[0]
-        self.front.setText(card_data[1])
-        self.back.setText(card_data[2])
-        self.labels = card_data[3]
+        self.created_date = card_data[0].split("\n")[0]
+        self.front.setText(card_data[1].split("\n")[0])
+        self.back.setText(card_data[2].split("\n")[0])
+        self.labels = card_data[3].split("\n")[0]
 
     def write_card_data(self, front, back, labels):
         """Alter flashcard's data.
@@ -103,7 +103,7 @@ class Flashcard(QtWidgets.QWidget):
     def create_card(self):
         """Create an empty flashcard."""
         if os.path.exists(self.card_id):
-            print(f"Card already exists at {self.card_id}!")
+            print(f"Card already exists at {self.card_id}.")
             return
         with open(self.card_id, "w", encoding="utf-8") as f:
             f.write("")
@@ -117,8 +117,9 @@ class Flashcard(QtWidgets.QWidget):
         ----------
         event : QtGui.QCloseEvent
         """
-        self.write_card_data(self.front.text().split("\n")[0], 
-                             self.back.text().split("\n")[0], self.labels)
+        self.write_card_data(self.front.text().split("\n")[0].split("\n")[0],
+                             self.back.text().split("\n")[0].split("\n")[0],
+                             self.labels)
 
     # def keyPressEvent(self, event):
     #     if event.key() != QtCore.Qt.Key_Enter:
