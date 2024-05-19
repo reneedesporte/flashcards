@@ -95,7 +95,10 @@ class Flashcard(QtWidgets.QWidget):
 
     def delete_card(self):
         """Delete the flashcard file."""
-        os.remove(self.card_id)
+        if os.path.exists(self.card_id):
+            os.remove(self.card_id)
+        else:
+            print(f"Can't delete card: No card file exists at {self.card_id}.")
 
     def create_card(self):
         """Create an empty flashcard."""
