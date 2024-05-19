@@ -46,6 +46,7 @@ class Deck(QtWidgets.QWidget):
         """Delete all flashcards in `save_dir`."""
         for card in self.cards:
             card.delete_card()
+        print("Deleted all flashcards!")
 
     def load_cards(self):
         """Load cards from save directory.
