@@ -46,7 +46,7 @@ class Flashcard(QtWidgets.QWidget):
             self.read_card_data()
         except AssertionError:
             print(f"{self.card_id} isn't formatted correctly. Consider deleting this card.")
-    
+
         self.setWindowTitle(f"Created: {self.created_date}")
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.front)
@@ -117,7 +117,8 @@ class Flashcard(QtWidgets.QWidget):
         ----------
         event : QtGui.QCloseEvent
         """
-        self.write_card_data(self.front.text().split("\n")[0], self.back.text().split("\n")[0], self.labels)
+        self.write_card_data(self.front.text().split("\n")[0], 
+                             self.back.text().split("\n")[0], self.labels)
 
     # def keyPressEvent(self, event):
     #     if event.key() != QtCore.Qt.Key_Enter:
